@@ -13,7 +13,7 @@ jobs:
      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22' # 更新版本以解決圖片中的 Node.js 警告
+          node-version: '22' 
 
       - name: Install and Build
         run: |
