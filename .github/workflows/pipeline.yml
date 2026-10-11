@@ -10,15 +10,15 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+     - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22' # 更新版本以解決圖片中的 Node.js 警告
 
       - name: Install and Build
         run: |
           npm install
-          npm run build
+          # 已經將 npm run build 移除，直接進行壓縮打包
           zip -r build.zip . -x "node_modules/*" ".git/*"
 
       - name: Upload Artifact
