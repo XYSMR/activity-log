@@ -1,7 +1,7 @@
 name: CI/CD Deployment Pipeline
 
 on:
-  workflow_dispatch: # 允許在 GitHub Actions 頁面手動觸發
+  workflow_dispatch:
 
 jobs:
   build:
@@ -10,15 +10,14 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-     - name: Setup Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22' 
+          node-version: '22'
 
       - name: Install and Build
         run: |
           npm install
-          # 已經將 npm run build 移除，直接進行壓縮打包
           zip -r build.zip . -x "node_modules/*" ".git/*"
 
       - name: Upload Artifact
@@ -43,7 +42,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_REPO: ${{ github.repository }}
-          TAG: ${{ vars.BUILD_TAG }}-${{ github.run_number }} # 結合 run_number 確保 tag 唯一
+          TAG: ${{ vars.BUILD_TAG }}-${{ github.run_number }}
           NOTE: ${{ vars.RELEASE_NOTE }}
         run: |
           gh release create "$TAG" build.zip --notes "$NOTE"
@@ -72,7 +71,7 @@ jobs:
   deploy-production:
     needs: deploy-staging
     runs-on: ubuntu-latest
-    environment: production # 這裡會觸發 Required reviewers
+    environment: production
     permissions:
       contents: write 
     steps:
