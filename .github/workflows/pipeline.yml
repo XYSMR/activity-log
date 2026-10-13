@@ -16,6 +16,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
+          cache: 'npm'
 
       - id: ver
         name: Extract Version from package.json
@@ -51,7 +52,7 @@ jobs:
           TAG: dev-v${{ needs.build.outputs.version }}-${{ github.run_number }}
           NOTE: ${{ vars.RELEASE_NOTE }}
         run: |
-          gh release create "$TAG" build.zip --notes "$NOTE"
+          gh release create "$TAG" build.zip --title "$TAG" --notes "$NOTE"
 
   deploy-staging:
     needs: [deploy-dev, build]
@@ -72,8 +73,7 @@ jobs:
           TAG: staging-v${{ needs.build.outputs.version }}-${{ github.run_number }}
           NOTE: ${{ vars.RELEASE_NOTE }}
         run: |
-          gh release create "$TAG" build.zip --notes "$NOTE"
-
+          gh release create "$TAG" build.zip --title "$TAG" --notes "$NOTE"
   ai-release-notes:
     needs: deploy-staging
     runs-on: ubuntu-latest
@@ -154,4 +154,4 @@ jobs:
           TAG: prod-v${{ needs.build.outputs.version }}-${{ github.run_number }}
           NOTE: ${{ vars.RELEASE_NOTE }}
         run: |
-          gh release create "$TAG" build.zip --notes "$NOTE"
+          gh release create "$TAG" build.zip --title "$TAG" --notes "$NOTE"
