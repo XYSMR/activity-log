@@ -52,4 +52,4 @@ jobs:
           GH_REPO: ${{ github.repository }}
         run: |
           echo "✅ Tests passed. Releasing new dev build..."
-          gh release create "dev-$(date +%s)" dist/* --notes "Automated release after successful tests"
+          gh release create "dev-$(date +%s)" dist/index.js --notes "Automated release after successful tests"
