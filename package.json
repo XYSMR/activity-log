@@ -14,7 +14,7 @@
 		"build": "bun install && bunx ncc build src/index.js --license licenses.txt",
 		"lint:commit": "commitlint --last --verbose",
 		"test": "npm run test:unit && npm run test:integration",
-		"test:unit": "node test/unit.test.js",
+		"test:unit": "node test/unit.test.js && node test/calc.test.js",
   		"test:integration": "node test/integration.test.js"
 	},
 	"devDependencies": {
